@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorate="~{app/view/fragments/mainLayout}">
+
+<th:block layout:fragment="pageScript">
+	<script type=text/javascript
+		th:src="@{/resources/layout/viewResources/activity.js}"></script>
+	<script type=text/javascript
+		src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</th:block>
+<body>
+	<th:block layout:fragment="content">
+		<div class="content-wrapper">
+			<div class="content-header"></div>
+			<!-- Main content -->
+			<section class="content">
+				<div class="col-md-12">
+
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">Add Activity</h3>
+						</div>
+						<div class="card-body">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-3 col-xs-6 no-padding-right">
+										<label for="inputStatus">Year</label> <select id="year"
+											name="year" class="form-control custom-select">
+											<option>2021</option>
+											<option>2022</option>
+											<option>2023</option>
+											<option>2024</option>
+										</select>
+									</div>
+									<div class="col-md-3 col-xs-6 no-padding-right">
+										<label for="inputStatus">Month</label> <select id="month"
+											name="month" class="form-control custom-select">
+											<option>Jan</option>
+											<option>Feb</option>
+											<option>Mar</option>
+											<option>Apri</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group"></div>
+								<div class="form-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-10 col-xs-6 no-padding-right">
+												<label for="inputName">Revenue</label>
+											</div>
+											<div class="col-md-1 col-xs-6 no-padding-right">
+												<label for="inputName">Note</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group" id="groupRevenue">
+										<div class="form-group">
+											<div class="row">
+												<div class="col-md-6 col-xs-6 no-padding-right">
+													<input type="text" id="accRevenue" name="accRevenue"
+														class="form-control">
+												</div>
+												<div>
+													<div class="input-group-prepend">
+														<span class="input-group-text">$</span>
+													</div>
+												</div>
+												<div>
+													<input type="text" id="accRevenueAmount" class="form-control">
+												</div>
+												<div>
+													<div class="input-group-append">
+														<span class="input-group-text">.00</span>
+													</div>
+												</div>
+												<div class="col-md-2 col-xs-6 no-padding-right">
+													<input type="text" id="noteRevenue" class="form-control">
+												</div>
+												<div>
+													<a href="#" class="btn btn-sm btn-primary"
+														onclick="addInputText()">+</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-10 col-xs-6 no-padding-right">
+												<label for="inputName">Expenditure</label>
+											</div>
+											<div>
+												<label for="inputName">Note</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group" id="addInputTextExpenditure">
+										<div class="form-group">
+											<div class="row">
+												<div class="col-md-6 col-xs-6 no-padding-right">
+													<input type="text" id="accExpenditure" class="form-control">
+												</div>
+												<div>
+													<div class="input-group-prepend">
+														<span class="input-group-text">$</span>
+													</div>
+												</div>
+												<div>
+													<input type="text" id="accExpenditureAmount"
+														class="form-control">
+												</div>
+												<div>
+													<div class="input-group-append">
+														<span class="input-group-text">.00</span>
+													</div>
+												</div>
+												<div class="col-md-2 col-xs-6 no-padding-right">
+													<input type="text" id="noteExpenditure"
+														class="form-control">
+												</div>
+												<div>
+													<a href="#" class="btn btn-sm btn-primary"
+														onclick="addInputTextExpenditure()">+</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-12">
+									<a href="/home" class="btn btn-secondary">Cancel</a> 
+									<input type="submit" onclick="save(this)"
+										class="btn btn-success float-right">
+								</div>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card -->
+					</div>
+				</div>
+			</section>
+			<!-- /.content -->
+
+		</div>
+	</th:block>
+	<script src="dist/js/demo.js"></script>
+</body>
+</html>

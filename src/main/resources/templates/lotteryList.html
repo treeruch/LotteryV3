@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorate="~{app/view/fragments/mainLayout}">
+<meta charset="UTF-8">
+<head>
+	<th:block layout:fragment="pageScript">
+	<!-- DataTables -->
+	<link rel="stylesheet"
+		href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+	
+    </th:block>
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<div class="content-wrapper">
+			<div>
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-8"></div>
+					</div>
+				</div>
+			</div>
+			<!-- Main content -->
+			<section class="content">
+				<div class="col-md-12">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">ข้อมูลการซื้อ</h3>
+						</div>
+						<div class="row">
+					          <div class="col-12">
+					            <div class="card">
+					              <!-- /.card-header -->
+					              <div class="card-body">
+					                 <table id="example1" class="table table-bordered table-hover">
+					                  <thead>
+					                  <tr>
+					                    <th style="text-align: center;">บิล</th>
+					                    <th style="text-align: center;">วันที่</th>
+					                    <th style="text-align: center;">ผู้ส่ง</th>
+										<th style="text-align: left;">สามตัวบน <i class=" fab fa-bitcoin"></i></th>
+										<th style="text-align: left;">โต๊ด<i class=" fab fa-bitcoin"></i></th>
+										<th style="text-align: left;">สองตัวบน<i class=" fab fa-bitcoin"></i></th>
+										<th style="text-align: left;">สองตัวล่าง<i class=" fab fa-bitcoin"></i></th>
+										<th style="text-align: left;">รวมเงิน<i class=" fab fa-bitcoin"></i></th>
+										<th style="text-align: left;">#</th>
+					                  </tr>
+					                  </thead>
+					                  
+					                  <tbody>
+					                   <tr th:each="obj : ${listHistory}">
+					                    <td th:text=${objStat.index+1}  style="text-align: center;"></td>
+										<td th:text=${obj.createDate} style="text-align: center;"></td>
+										<td th:text=${obj.createBy} style="text-align: center;"></td>
+										<td th:text=${obj.sumTopThreePriceStr}></td>
+										<td th:text=${obj.sumTodPriceStr}></td>
+										<td th:text=${obj.sumTopTwoPriceStr}></td>
+										<td th:text=${obj.sumUnderTwoPriceStr}></td>
+										<td th:text=${obj.sumPriceStr}></td>
+											<td style="text-align: center;"><a th:href="@{'/editHistory/'+${obj.groupLottery}}" class="small-box-footer"><i class="fas fa-money-check-alt" style="color:red"></i></a></td>
+										</tr>
+					                  </tbody>
+					                  
+					                  <tfoot>
+					                  <tr>
+					                     <th style="text-align: center;">บิล</th>
+					                    <th style="text-align: center;">วันที่</th>
+					                     <th style="text-align: center;">ผู้ส่ง</th>
+										<th style="text-align: left;">สามตัวบน<i class=" fab fa-bitcoin"></i></th>
+										<th style="text-align: left;">โต๊ด<i class=" fab fa-bitcoin"></i></th>
+										<th style="text-align: left;">สองตัวบน<i class=" fab fa-bitcoin"></i></th>
+										<th style="text-align: left;">สองตัวล่าง<i class=" fab fa-bitcoin"></i></th>
+										<th style="text-align: left;">รวมเงิน<i class=" fab fa-bitcoin"></i></th>
+										<th style="text-align: left;">#</th>
+					                  </tr>
+					                  </tfoot>
+					                </table>
+					              </div>
+					              <!-- /.card-body -->
+					            </div>
+					            <!-- /.card -->
+					          </div>
+					          <!-- /.col -->
+					        </div>
+						<!-- /.card -->
+					</div>
+				</div>
+			</section>
+			<!-- /.content -->
+
+		</div>
+		
+		<!-- jQuery -->
+		<script src="../../plugins/jquery/jquery.min.js"></script>
+		<!-- Bootstrap 4 -->
+		<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- DataTables -->
+		<script src="../../plugins/datatables/jquery.dataTables.js"></script>
+		<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+		<script type="text/javascript" th:src="@{/lottery/js/user.js}"></script>
+			
+	</th:block>
+	<script src="dist/js/demo.js"></script>
+</body>
+<script>
+
+</script>
+</html>

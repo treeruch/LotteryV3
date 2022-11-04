@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorate="~{app/view/fragments/mainLayout}">
+<meta charset="UTF-8">
+<head>
+<th:block layout:fragment="pageScript">
+	<!-- DataTables -->
+	<link rel="stylesheet"
+		href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
+</th:block>
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<div class="content-wrapper">
+			<div>
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-8"></div>
+					</div>
+				</div>
+			</div>
+			<!-- Main content -->
+			<section class="content">
+				<div class="col-md-12">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">ซื้อหวย</h3>
+						</div>
+
+						<form class="form-sample" th:object="${userModel}" th:action=@{/lotteryAdd} method="post">
+							<div class="card-body" id="tabAddLotterry">
+								<div class="form-group">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group row">
+												<div class="col-sm-5"></div>
+												<div class="col-sm-2">
+													<select class="form-control select2" style="width: 100%;" id="userId" name="userId" required="required">
+														<option selected="selected" style="text-align: center;" value="">-- เลือกผู้ส่ง --</option>
+														<option th:each="obj : ${listUser}" th:value="${obj.userId}" th:name="${obj.name}" th:text="${obj.name}"></option>
+													</select>
+												</div>
+												<input type="hidden" class="form-control" id="userHidden" name="userHidden" th:value="${userHidden}">
+												<div class="col-sm-5"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="card card-info">
+											<div class="card-header">
+												<h3 class="card-title" style="text-align: center;">สามตัว บน - โต๊ด</h3>
+											</div>
+											<div class="card-body">
+												<div class="row" id="addThree"></div>
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group row">
+															<div class="col-sm-4"></div>
+															<div class="col-md-4" style="text-align: center;">
+																<button type="button" class="btn btn-primary" id="addLotteryThree" name="addLotteryThree">
+																	&nbsp;เพิ่มหวย &nbsp;
+																</button>
+															</div>
+															<div class="col-sm-4"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="card card-info">
+											<div class="card-header">
+												<h3 class="card-title" style="text-align: center;">สองตัว บน - ล่าง</h3>
+											</div>
+											<div class="card-body">
+												<div class="row" id="addTwo"></div>
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group row">
+															<div class="col-sm-4"></div>
+															<div class="col-md-4" style="text-align: center;">
+																<button type="button" class="btn btn-primary"
+																	id="addLotteryTwo" name="addLotteryTwo">
+																	&nbsp; เพิ่มหวย &nbsp;
+																</button>
+															</div>
+															<div class="col-sm-4"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row" id="addThreeHidden" hidden="true">
+									<div class="col-md-12" id="addThreeHiddenRow">
+										<div class="form-group row">
+											<div class="col-sm-2">
+												<input type="text" onchange="checkValueThree(event)" class="form-control" 
+												    id="threeArray" name="threeArray"
+													th:value="${threeArray}"
+													oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+													maxlength="3">
+											</div>
+											<label class="col-sm-1 col-form-label" style="text-align: center;"> = </label>
+											<div class="col-sm-3">
+												<input type="text" onchange="checkValueTopThree(event)"
+													class="form-control" id="topThreePriceArray"
+													name="topThreePriceArray" th:value="${topThreePriceArray}"
+													placeholder="บน"
+													oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+											</div>
+											<label class="col-sm-1 col-form-label" style="text-align: center;"> X </label>
+											<div class="col-sm-3">
+												<input type="text" onchange="checkValueTodThree(event)"
+													class="form-control" id="todPriceArray"
+													name="todPriceArray" th:value="${todPriceArray}"
+													placeholder="โต๊ด"
+													oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+											</div>
+											<label id="addThreeMessg" class="col-sm-1 col-form-label" style="text-align: center; color: red; display: none"><i class="fas fa-window-close"></i></label>
+											<div class="col-sm-1" style="text-align: right;">
+												<button type="button" class="btn btn-danger"
+													id="deleteLotteryThree" onclick="deleteRowThree(event)">ลบ</button>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
+								<div class="row" id="addTwoHidden" hidden="true">
+									<div class="col-md-12" id="addTwoHiddenRow">
+										<div class="form-group row">
+											<div class="col-sm-2">
+												<input type="text" onchange="checkValueTwo(event)"
+													class="form-control" id="twoArray" name="twoArray"
+													th:value="${twoArray}"
+													oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+													maxlength="2">
+											</div>
+											<label class="col-sm-1 col-form-label" style="text-align: center;"> = </label>
+											<div class="col-sm-3">
+												<input type="text" onchange="checkValueTopTwo(event)"
+													class="form-control" id="topTwoPriceArray"
+													name="topTwoPriceArray" th:value="${topTwoPriceArray}"
+													placeholder="บน"
+													oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+											</div>
+											<label class="col-sm-1 col-form-label" style="text-align: center;"> X </label>
+											<div class="col-sm-3">
+												<input type="text" onchange="checkValueUnderTwo(event)"
+													class="form-control" id="underTwoPriceArray"
+													name="underTwoPriceArray" th:value="${underTwoPriceArray}"
+													placeholder="ล่าง"
+													oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+											</div>
+											<label id="addTwoMessg" class="col-sm-1 col-form-label" style="text-align: center; color: red; display: none"><i class="fas fa-window-close"></i></label>
+											<div class="col-sm-1" style="text-align: right;">
+												<button type="button" class="btn btn-danger"
+													id="deleteLotteryTwo" onclick="deleteRowTwo(event)">ลบ</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-5"></div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<button id="buttonSave" type="submit"
+												class="btn btn-success float-right">บันทึก</button>
+											<a th:href="@{/lotteryAdd}" class="btn btn-secondary">ยกเลิก</a>
+										</div>
+									</div>
+									<div class="col-md-5"></div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<input type="hidden" class="form-control" id="validateAddThree" name="validateAddThree"> 
+					<input type="hidden" class="form-control" id="validateAddTwo" name="validateAddTwo">
+
+					<input type="hidden" class="form-control" id="countDupThree" name="countDupThree"> 
+					<input type="hidden" class="form-control" id="countDupTwo" name="countDupTwo">
+
+					<input type="hidden" class="form-control" id="listThree" name="listThree" th:value="${listThree}"> 
+					<input type="hidden" class="form-control" id="listThreePrice" name="listThreePrice" th:value="${listThreePrice}"> 
+					<input type="hidden" class="form-control" id="listTodPrice" name="listTodPrice" th:value="${topTodPrice}"> 
+					<input type="hidden" class="form-control" id="listTwo" name="listTwo" th:value="${listTwo}"> 
+					<input type="hidden" class="form-control" id="listTopTwoPrice" name="listTopTwoPrice" th:value="${listTwoPrice}"> 
+					<input type="hidden" class="form-control" id="listUnderTwoPrice" name="listUnderTwoPrice" th:value="${listUnderTwoPrice}">
+				</div>
+			</section>
+		</div>
+
+		<!-- POPUP --> 
+		<div class="modal fade show" id="modal-sm">
+			<div class="modal-dialog">
+				<div class="modal-content bg-warning">
+					<div class="modal-header">
+						<h4 class="modal-title">ข้อความแจ้งเตือน</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p class="text-danger">
+							เลขซ้ำ !!! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+								type="text" class="col-sm-2" id="numberDup" disabled="disabled"
+								style="text-align: center;">
+						</p>
+						<input type="hidden" id="confrimeDelete" name="confrimeDelete">
+					</div>
+					<div class="modal-footer">
+						<button type="button" onclick="closeDup();"
+							class="btn btn-outline-dark">ปิด</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- jQuery -->
+		<script src="../../plugins/jquery/jquery.min.js"></script>
+		<!-- Bootstrap 4 -->
+		<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- DataTables -->
+		<script src="../../plugins/datatables/jquery.dataTables.js"></script>
+		<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+		<script type="text/javascript" th:src="@{/lottery/js/lottery.js}"></script>
+
+	</th:block>
+	<script src="dist/js/demo.js"></script>
+</body>
+<script>
+
+</script>
+</html>
