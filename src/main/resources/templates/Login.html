@@ -13,53 +13,29 @@
   <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-  <style>
-body {
-  background: url('../../dist/img/lottery_Login.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
+<style>
+.h1, h1 {
+    font-size: 1.5rem;
 }
 </style>
 </head>
-<body>
-<!-- Page Content -->
-<div class="container">
-<div class="container">    
-  <div class="row">
-    <div class="col-sm-4">
-
-	</div>
-	<div class="col-sm-4"></div>
-	<div class="col-sm-4"></div>
-   </div>
- </div>
-      <div class="row">
-				<div class="col-md-6" style="height: 235px;">
-					 <div class="form-group">
-					</div>
-			    </div>
-			<div class="col-md-6"></div>
-	  </div>
-	  
-	   <div class="row">
-				<div class="col-md-5">
-					 <div class="form-group">
-					 <form method="post" th:action="@{'/dashboard'}">
-							  <button type="submit" class="btn btn-primary btn-block btn-lg" style="height: 150px;"><h1><i class="nav-icon fas fa-laptop"></i>&nbsp; เข้าสู่ระบบ</h1></button>
-					 </form>
-					</div>
-			    </div>
-			<div class="col-md-4"></div>
-			<div class="col-md-3">
-			  <div class="form-group">
-			      <button type="submit" class="text-warning btn-block btn-lg" style="height: 150px;" disabled><h1>วันนี้รวย</h1></button>
-			  </div>
-			</div>
-		</div>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <!-- <p><b>ระบบจัดการหวย</b></p> -->
+    <img src="dist/img/lottery_thai.png" class="brand-image img-circle elevation-3" style="opacity: .8">
+  		
+  </div>
+  <div class="login-logo">
+    <form method="post" th:action="@{/dashboard}">
+			<button type="submit" class="btn btn-primary"><h1>เข้าสู่ระบบ</h1></button>
+	</form>
+  </div>
+  <!-- /.login-logo -->
+  <div>
+    
+  </div>
 </div>
-
 <!-- /.login-box -->
 
 <!-- jQuery -->
