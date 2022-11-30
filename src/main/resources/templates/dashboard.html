@@ -93,8 +93,22 @@
 			              <a th:href="@{lotteryUnderTwo}" class="small-box-footer">รายละเอียด <i class="fas fa-arrow-circle-right"></i></a>
 			            </div>
 			          </div>
+			          
 			          <!-- ./col -->
-			          <div class="col-lg-4 col-6">
+			         <div class="col-lg-4 col-6">
+			            <!-- small box -->
+			            <div class="small-box bg-success">
+			              <div class="inner">
+			                <select class="form-control select2" style="width: 100%;" id="userId" name="userId" required="required">
+														<option selected="selected" style="text-align: center;" value="">-- เลือกผู้ส่ง --</option>
+														<option th:each="obj : ${listUser}" th:value="${obj.userId}" th:name="${obj.name}" th:text="${obj.name}"></option>
+													</select>
+			              </div>
+			              <div class="icon">
+			                <i class="ion ion-stats-bars"></i>
+			              </div>
+			              <a th:href="@{lotteryUnderTwo}" class="small-box-footer">โหลด PDF <i class="fas fa-arrow-circle-right"></i></a>
+			            </div>
 			          </div>
 			        </div>
 					<!-- /.row -->

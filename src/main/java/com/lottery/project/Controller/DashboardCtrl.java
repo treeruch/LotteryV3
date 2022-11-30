@@ -1,5 +1,6 @@
 package com.lottery.project.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,14 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lottery.project.entity.Lottery;
+import com.lottery.project.entity.User;
 import com.lottery.project.model.LotteryModel;
 import com.lottery.project.service.LotterService;
+import com.lottery.project.service.UserService;
 import com.lottery.project.utility.Mapping;
 
 @Controller
 @RestController
 @SpringBootApplication
 public class DashboardCtrl {
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private LotterService lotterService;
@@ -43,6 +49,13 @@ public class DashboardCtrl {
 		modelAndView.addObject("sumTopTwo",obj.getSumTopTwoPrice());
 		modelAndView.addObject("sumUnderTwo",obj.getSumUnderTwoPrice());
 		modelAndView.addObject("sumlottery",obj.getSumPrice());
+		
+		List<User> listUser = new ArrayList<User>();
+    	System.out.println("--- Start Find list User ... ");
+    	listUser = userService.findAll();
+    	System.out.println("--- End Find list User. ");
+    	
+    	modelAndView.addObject("listUser",listUser);
 		return modelAndView; 
 	}
 	
@@ -60,6 +73,13 @@ public class DashboardCtrl {
 		modelAndView.addObject("sumTopTwo",obj.getSumTopTwoPrice());
 		modelAndView.addObject("sumUnderTwo",obj.getSumUnderTwoPrice());
 		modelAndView.addObject("sumlottery",obj.getSumPrice());
+		
+		List<User> listUser = new ArrayList<User>();
+    	System.out.println("--- Start Find list User ... ");
+    	listUser = userService.findAll();
+    	System.out.println("--- End Find list User. ");
+    	
+    	modelAndView.addObject("listUser",listUser);
 		
 		System.out.println("### End Home Dashboard.");
 		return modelAndView; 
