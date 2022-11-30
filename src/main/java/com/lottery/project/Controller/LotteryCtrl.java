@@ -555,5 +555,19 @@ public class LotteryCtrl {
         return modelview;
    }
 	
+	
+	// GET Under Two
+		@GetMapping(Mapping.GET.GET_DOWNLOAD_PDF)
+	    public ModelAndView downloadPDF(HttpSession session) {
+			System.out.println("### Start GET downloadPDF ... ");
+	    	ModelAndView modelview = new ModelAndView();
+	    	//modelview.setViewName(Mapping.VIEW.VIEW_MAP_LOTTERY_ADD);
+	    	modelview.setViewName(Mapping.VIEW.VIEW_DOWNLOAD_PDF);
+			
+	    	List<LotteryModel> list = lotterService.findLotteryUnderTwo(0);
+	    	modelview.addObject("list",list);
+	    	System.out.println("### End GET downloadPDF. ");
+	        return modelview;
+	   }
 
 }
