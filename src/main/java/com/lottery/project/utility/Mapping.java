@@ -41,6 +41,7 @@ public class Mapping {
 		public static final String GET_DOWNLOAD_PDF = "/downloadPdf";
 		
 		public static final String EXPORT_LOTTERY = "/exportLottery";
+		public static final String EXPORT_LOTTERY_PDF = "/exportLotteryPdf";
 	}
 	
 
@@ -67,6 +68,7 @@ public class Mapping {
 		public static final String VIEW_MAP_LOTTERY_UNDER_TWO = "lotteryUnderTwo";
 		public static final String VIEW_MAP_LOTTERY_VIEW = "lotteryView";
 		public static final String VIEW_DOWNLOAD_PDF = "downloadPDF";
+		
 	}
 
 	 

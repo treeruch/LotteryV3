@@ -29,9 +29,9 @@
 				<div class="col-md-12">
 					<div class="card card-primary">
 						<div class="card-header">
-							<h3 class="card-title">เพิ่มรายชื่อผู้ส่งหวยรายย่อย</h3>
+							<h3 class="card-title">โหลดไฟล์ตามรายชื่อ</h3>
 						</div>
-				       <form class="form-sample" th:object="${user}" th:action=@{/insertUser} method="post">
+				       <form class="form-sample" th:object="${user}" th:action=@{/downloadPdf} method="post">
 						<div class="card-body">
 							<div class="form-group">
 							<div class="row">
@@ -39,8 +39,11 @@
 									<div class="form-group row">
 										<label class="col-sm-4 col-form-label" style="text-align: right;">ชื่อ </label>
 										<div class="col-sm-4">
-										    <input type="text" class="form-control" id="name" name="name" th:value="${name}" required="true"> 
-										</div>
+														<select class="form-control select2" style="width: 100%;" id="userId" name="userId" required="required">
+														<option selected="selected" style="text-align: center;" value="">-- เลือกผู้ส่ง --</option>
+														<option th:each="obj : ${listUser}" th:value="${obj.userId}" th:name="${obj.name}" th:text="${obj.name}"></option>
+										</select>										</div>
+										
 									</div>
 								</div>
 							</div>
@@ -48,10 +51,7 @@
 							<div class="row">
 							<div class="col-md-5"></div>
 								<div class="col-md-2">
-									 <div class="form-group">
-											<button type="submit" class="btn btn-success float-right" >บันทึก</button>
-											<a th:href="@{/user}" class="btn btn-secondary">ยกเลิก</a>
-									</div>
+									 <a th:href="@{downloadReceipt}" class="btn btn-primary">Download</a>
 							    </div>
 							<div class="col-md-5"></div>
 							</div>
@@ -61,69 +61,6 @@
 							<!-- /.card-body -->
 						</div>
 						</form>
-						<div class="row">
-						<div class="col-12">
-							<div class="card">
-								<div class="card-body">
-									<table id="example1" class="table table-bordered table-striped">
-										<thead>
-											<tr>
-												<th style="text-align: center; width: 50px;">ลำดับ</th>
-												<th style="text-align: center;">รายชื่อผู้ส่งหวยรายย่อย</th>
-												<th style="text-align: center;">รวมเงินส่งหวย / บาท</th>
-												<th style="text-align: center; width: 50px;"></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="obj : ${listUser}">
-												<td th:text=${objStat.index+1} style="text-align: center;"></td>
-												<td th:text=${obj.createBy} style="text-align: center;"></td>
-												<td th:text=${obj.sum} style="text-align: center;"></td>
-												<!-- <td style="text-align: center;"><a th:href="@{'/deleteUser/'+${obj.id}}" class="small-box-footer"><i class="fas fa-trash-alt " style="color:red"></i></a></td> -->
-												<td style="text-align: center;"><button type="button" class="btn btn-danger" data-toggle="modal" th:id="${obj.id}" data-target="#modal-sm" onclick="confrime(this.id)">  ลบ  </button></td>
-											</tr>
-										</tbody>
-										<!-- <tfoot>
-											<tr>
-												<th style="text-align: center; width: 50px;">ลำดับ</th>
-												<th style="text-align: center;">รายชื่อผู้ส่งหวยรายย่อย</th>
-												<th style="text-align: center; width: 50px;"></th>
-											</tr>
-										</tfoot> -->
-									</table>
-								</div>
-								<!-- /.card-body -->
-								
-						      <div class="modal fade" id="modal-sm">
-						        <div class="modal-dialog modal-sm">
-						          <div class="modal-content">
-						            <div class="modal-header">
-						              <h4 class="modal-title">ข้อความ</h4>
-						              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						                <span aria-hidden="true">&times;</span>
-						                
-						              </button>
-						            </div>
-						            <div class="modal-body">
-						               <p>ยืนยันลบชื่อผู้ส่งหวยรายย่อย... </p>
-						               <p class="text-danger">ข้อมูลการซื้อทั้งหมดจะถูกลบ !!!</p>
-						                <input type="hidden" id="confrimeDelete" name="confrimeDelete">
-						            </div>
-						            <div class="modal-footer justify-content-between">
-						              <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-						              <button type="button" class="btn btn-primary" onclick="document.location='/deleteUser/'+$('#confrimeDelete').val()"> ยืนยัน</button>
-						            </div>
-						          </div>
-						          <!-- /.modal-content -->
-						        </div>
-						        <!-- /.modal-dialog -->
-						      </div>
-							</div>
-							<!-- /.card -->
-						</div>
-						<!-- /.col -->
-					</div>
-						<!-- /.card -->
 					</div>
 				</div>
 			</section>

@@ -1,16 +1,28 @@
 package com.lottery.project.Controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
+import java.util.Map;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,16 +34,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.lottery.project.entity.Customer;
 import com.lottery.project.entity.History;
 import com.lottery.project.entity.Lottery;
+import com.lottery.project.entity.ReceiptItem;
 import com.lottery.project.entity.User;
 import com.lottery.project.model.HistoryModel;
 import com.lottery.project.model.LotteryModel;
+import com.lottery.project.service.ExportPdfService;
 import com.lottery.project.service.HistoryServcie;
 import com.lottery.project.service.LotterService;
 import com.lottery.project.service.UserService;
 import com.lottery.project.service.UtilService;
 import com.lottery.project.utility.Mapping;
+
+
 
 @Controller
 public class LotteryCtrl {
@@ -47,6 +64,9 @@ public class LotteryCtrl {
 	
 	@Autowired
 	private LotterService lotterService;
+	
+	@Autowired
+	private ExportPdfService exportPdfService;
 	
 	
 	private static final SimpleDateFormat sdf_ddMMyyyy = new SimpleDateFormat("dd-MM-yyyy",Locale.US);
@@ -556,7 +576,7 @@ public class LotteryCtrl {
    }
 	
 	
-	// GET Under Two
+	// GET Download pdf
 		@GetMapping(Mapping.GET.GET_DOWNLOAD_PDF)
 	    public ModelAndView downloadPDF(HttpSession session) {
 			System.out.println("### Start GET downloadPDF ... ");
@@ -564,10 +584,61 @@ public class LotteryCtrl {
 	    	//modelview.setViewName(Mapping.VIEW.VIEW_MAP_LOTTERY_ADD);
 	    	modelview.setViewName(Mapping.VIEW.VIEW_DOWNLOAD_PDF);
 			
-	    	List<LotteryModel> list = lotterService.findLotteryUnderTwo(0);
-	    	modelview.addObject("list",list);
+	    	List<User> listUser = new ArrayList<User>();
+	    	System.out.println("--- Start Find list User ... ");
+	    	listUser = userService.findAll();
+	    	System.out.println("--- End Find list User. ");
+	    	
+	    	modelview.addObject("listUser",listUser);
+	    	
 	    	System.out.println("### End GET downloadPDF. ");
 	        return modelview;
 	   }
+		
+		
+		@GetMapping("/downloadReceipt")
+	    public void downloadReceipt(HttpServletResponse response) throws IOException {
+	        Map<String, Object> data = createTestData();
+	        ByteArrayInputStream exportedData = exportPdfService.exportReceiptPdf("receipt", data);
+	        response.setContentType("application/octet-stream");
+	        response.setHeader("Content-Disposition", "attachment; filename=receipt.pdf");
+	        IOUtils.copy(exportedData, response.getOutputStream());
+	    }
+
+	    private Map<String, Object> createTestData() {
+	        Map<String, Object> data = new HashMap<>();
+	        Customer customer = new Customer();
+	        customer.setCompanyName("Simple Solution");
+	        customer.setContactName("John Doe");
+	        customer.setAddress("123, Simple Street");
+	        customer.setEmail("contact@simplesolution.dev");
+	        customer.setPhone("123 456 789");
+	        data.put("customer", customer);
+
+	        List<ReceiptItem> receiptItems = new ArrayList<>();
+	        ReceiptItem receiptItem1 = new ReceiptItem();
+	        receiptItem1.setDescription("Test Item 1");
+	        receiptItem1.setQuantity(1);
+	        receiptItem1.setUnitPrice(100.0);
+	        receiptItem1.setTotal(100.0);
+	        receiptItems.add(receiptItem1);
+
+	        ReceiptItem receiptItem2 = new ReceiptItem();
+	        receiptItem2.setDescription("Test Item 2");
+	        receiptItem2.setQuantity(4);
+	        receiptItem2.setUnitPrice(500.0);
+	        receiptItem2.setTotal(2000.0);
+	        receiptItems.add(receiptItem2);
+
+	        ReceiptItem receiptItem3 = new ReceiptItem();
+	        receiptItem3.setDescription("Test Item 3");
+	        receiptItem3.setQuantity(2);
+	        receiptItem3.setUnitPrice(200.0);
+	        receiptItem3.setTotal(400.0);
+	        receiptItems.add(receiptItem3);
+
+	        data.put("receiptItems", receiptItems);
+	        return data;
+	    }
 
 }
