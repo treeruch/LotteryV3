@@ -508,14 +508,15 @@ public class UtilService {
 				userModel.setStartDate(startDate);
 		        data.put("user", userModel);
 		        
-		        List<ReceiptItem> receiptItems = new ArrayList<>();
-		        ReceiptItem receiptItem1 = new ReceiptItem();
-		        receiptItem1.setDescription("Test Item 1");
-		        receiptItem1.setQuantity(1);
-		        receiptItem1.setUnitPrice(100.0);
-		        receiptItem1.setTotal(100.0);
-		        receiptItems.add(receiptItem1);     
-		        data.put("receiptItems", receiptItems);
+		        List<LotteryModel> LotteryModelList = new ArrayList<>();
+		        
+		        
+		        
+		        LotteryModel lotteryModel = new LotteryModel();
+		        
+		        
+		        LotteryModelList.add(lotteryModel);     
+		        data.put("lotteryModelList", listTopThree);
 			}
 			
 		    // this.exportExcell(workbook,sheet,startDateEndDate,headerStr,listTopThree,listTod,listTopTwo,listUnderTwo);
