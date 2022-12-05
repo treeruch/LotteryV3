@@ -39,9 +39,8 @@
 									<div class="form-group row">
 										<label class="col-sm-4 col-form-label" style="text-align: right;">ชื่อ </label>
 										<div class="col-sm-4">
-														<select class="form-control select2" style="width: 100%;" id="userId" name="userId" required="required">
-														<option selected="selected" style="text-align: center;" value="">-- เลือกผู้ส่ง --</option>
-														<option th:each="obj : ${listUser}" th:value="${obj.userId}" th:name="${obj.name}" th:text="${obj.name}"></option>
+														<select class="form-control select2" style="width: 100%;" id="userId" name="userId" required="required" onchange="downloadPdf();">
+														<option th:each="obj : ${listUser}" th:value="${obj.userId}" th:name="${obj.name}" th:text="${obj.name}" ></option>
 										</select>										</div>
 										
 									</div>
@@ -51,7 +50,8 @@
 							<div class="row">
 							<div class="col-md-5"></div>
 								<div class="col-md-2">
-									 <a th:href="@{downloadReceipt}" class="btn btn-primary">Download</a>
+								   
+									 <a th:href="@{downloadReceipt}" id="pdf" class="btn btn-primary">Download</a>
 							    </div>
 							<div class="col-md-5"></div>
 							</div>

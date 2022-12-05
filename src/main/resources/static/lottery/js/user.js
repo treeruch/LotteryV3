@@ -1,3 +1,16 @@
+$(document).ready(function(){
+	var userId = $('#userId').val();
+	console.log(userId);
+    document.getElementById("pdf").href="downloadReceipt/"+userId; 
+});
+
+function downloadPdf (){
+	var userId = $('#userId').val();
+	console.log(userId);
+    document.getElementById("pdf").href="downloadReceipt/"+userId; 
+
+}
+
 $(function() {
 	/*$("#example1").DataTable();*/
 	$('#example1').DataTable({
@@ -29,4 +42,6 @@ function testExport(){
 	        }
 	   });
 }
+
+
 	

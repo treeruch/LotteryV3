@@ -25,12 +25,14 @@ import javax.servlet.http.HttpSession;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -596,48 +598,23 @@ public class LotteryCtrl {
 	   }
 		
 		
-		@GetMapping("/downloadReceipt")
-	    public void downloadReceipt(HttpServletResponse response) throws IOException {
-	        Map<String, Object> data = createTestData();
+		
+		@ResponseBody
+		@RequestMapping(value = "/downloadReceipt/{id}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	    public void downloadReceipt(HttpServletResponse response,@PathVariable(name = "id", required = false) Long id) throws IOException {
+	        Map<String, Object> data = createTestData(id);
 	        ByteArrayInputStream exportedData = exportPdfService.exportReceiptPdf("receipt", data);
+	      
 	        response.setContentType("application/octet-stream");
 	        response.setHeader("Content-Disposition", "attachment; filename=receipt.pdf");
 	        IOUtils.copy(exportedData, response.getOutputStream());
 	    }
 
-	    private Map<String, Object> createTestData() {
+	    private Map<String, Object> createTestData(Long id) {
+	    	String startDate = sdf_ddMMyyyy.format(new Date());
 	        Map<String, Object> data = new HashMap<>();
-	        Customer customer = new Customer();
-	        customer.setCompanyName("Simple Solution");
-	        customer.setContactName("John Doe");
-	        customer.setAddress("123, Simple Street");
-	        customer.setEmail("contact@simplesolution.dev");
-	        customer.setPhone("123 456 789");
-	        data.put("customer", customer);
-
-	        List<ReceiptItem> receiptItems = new ArrayList<>();
-	        ReceiptItem receiptItem1 = new ReceiptItem();
-	        receiptItem1.setDescription("Test Item 1");
-	        receiptItem1.setQuantity(1);
-	        receiptItem1.setUnitPrice(100.0);
-	        receiptItem1.setTotal(100.0);
-	        receiptItems.add(receiptItem1);
-
-	        ReceiptItem receiptItem2 = new ReceiptItem();
-	        receiptItem2.setDescription("Test Item 2");
-	        receiptItem2.setQuantity(4);
-	        receiptItem2.setUnitPrice(500.0);
-	        receiptItem2.setTotal(2000.0);
-	        receiptItems.add(receiptItem2);
-
-	        ReceiptItem receiptItem3 = new ReceiptItem();
-	        receiptItem3.setDescription("Test Item 3");
-	        receiptItem3.setQuantity(2);
-	        receiptItem3.setUnitPrice(200.0);
-	        receiptItem3.setTotal(400.0);
-	        receiptItems.add(receiptItem3);
-
-	        data.put("receiptItems", receiptItems);
+	        data = utilService.getPdfLottery(startDate,id);
+	        
 	        return data;
 	    }
 

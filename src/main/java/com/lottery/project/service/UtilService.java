@@ -4,8 +4,10 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,9 +28,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lottery.project.Repository.UserRepositoryJPA;
+import com.lottery.project.entity.Customer;
 import com.lottery.project.entity.Lottery;
+import com.lottery.project.entity.ReceiptItem;
 import com.lottery.project.entity.User;
 import com.lottery.project.model.LotteryModel;
+import com.lottery.project.model.UserModel;
 
 @Service
 public class UtilService {
@@ -241,6 +246,8 @@ public class UtilService {
 		}
 		return workbook;
 	}
+	
+	
 	
 	private void exportExcell(XSSFWorkbook workbook, XSSFSheet sheet, String startDateEndDate, String headerStr, List<LotteryModel> listTopThree, List<LotteryModel> listTod,
 			List<LotteryModel> listTopTwo, List<LotteryModel> listUnderTwo) {
@@ -477,5 +484,43 @@ public class UtilService {
 		    	}
     	}
 		return listTodStr;
+	}
+
+	public Map<String, Object> getPdfLottery(String startDate, Long id) {
+		Map<String, Object> data = new HashMap<>();
+
+		List<LotteryModel> listTopThree = lotterService.findLotteryTopThree(0);
+		List<LotteryModel> listTod = this.findLotteryTod(0);
+		List<LotteryModel> listTopTwo = lotterService.findLotteryTopTwo(0);
+		List<LotteryModel> listUnderTwo = lotterService.findLotteryUnderTwo(0);
+
+        List<User> list =  userRepositoryJPA.findAll();
+		for(User user : list) {
+			
+			if(id == user.getUserId()) {
+				 listTopThree = lotterService.findLotteryTopThree(user.getUserId()); 
+				 listTod =  this.findLotteryTod(user.getUserId()); 
+				 listTopTwo = lotterService.findLotteryTopTwo(user.getUserId()); 
+				 listUnderTwo = lotterService.findLotteryUnderTwo(user.getUserId());
+ 
+				UserModel userModel = new UserModel();
+				userModel.setName(user.getName());
+				userModel.setStartDate(startDate);
+		        data.put("user", userModel);
+		        
+		        List<ReceiptItem> receiptItems = new ArrayList<>();
+		        ReceiptItem receiptItem1 = new ReceiptItem();
+		        receiptItem1.setDescription("Test Item 1");
+		        receiptItem1.setQuantity(1);
+		        receiptItem1.setUnitPrice(100.0);
+		        receiptItem1.setTotal(100.0);
+		        receiptItems.add(receiptItem1);     
+		        data.put("receiptItems", receiptItems);
+			}
+			
+		    // this.exportExcell(workbook,sheet,startDateEndDate,headerStr,listTopThree,listTod,listTopTwo,listUnderTwo);
+		}
+
+			return data;
 	}
 }
