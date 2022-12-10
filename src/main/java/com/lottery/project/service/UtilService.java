@@ -550,7 +550,7 @@ public class UtilService {
 		            if(i< listUnderTwo.size()) {
 		            	lotteryModel.setUnderTwo(listUnderTwo.get(i).getUnderTwo());
 		            	lotteryModel.setUnderTwoPrice(listUnderTwo.get(i).getSumUnderTwoPrice());
-		            	sumTopTwo+= Integer.valueOf(lotteryModel.getUnderTwoPrice().replace(",", ""));
+		            	sumUnderTwo+= Integer.valueOf(lotteryModel.getUnderTwoPrice().replace(",", ""));
 		            }
 		            
 		        	
@@ -558,10 +558,11 @@ public class UtilService {
 		        }
 		        
 		        LotteryModel lotteryModel = new LotteryModel();
-		        lotteryModel.setSumTopThreePrice(String.valueOf(sumTopThree));
-		        lotteryModel.setSumTodPrice(String.valueOf(sumTod));
-		        lotteryModel.setSumTopTwoPrice(String.valueOf(sumTopTwo));
-		        lotteryModel.setSumUnderTwoPrice(String.valueOf(sumUnderTwo));
+		        lotteryModel.setSumTopThreePrice(this.formatPrice(sumTopThree));
+		        lotteryModel.setSumTodPrice(this.formatPrice(sumTod));
+		        lotteryModel.setSumTopTwoPrice(this.formatPrice(sumTopTwo));
+		        lotteryModel.setSumUnderTwoPrice(this.formatPrice(sumUnderTwo));
+		        lotteryModel.setSumPrice(this.formatPrice(sumTopThree+sumTod+sumTopTwo+sumUnderTwo));
 		        data.put("modelSum", lotteryModel);
 
 		        data.put("lotteryModelList", LotteryModelList);
