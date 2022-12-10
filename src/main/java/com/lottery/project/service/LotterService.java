@@ -90,8 +90,8 @@ public class LotterService {
         	LotteryModel obj = new LotteryModel();
         	if(list.get(j).getTopTwo() != null) {
         		obj.setTopTwo(list.get(j).getTopTwo());
-            	obj.setRecive(String.valueOf( (float) ((float) (risk * Integer.valueOf(list.get(j).getSumTopTwoPrice())) / 100) ));
-            	obj.setSend(String.valueOf( (float) (( (float) (( 100 - risk) * Integer.valueOf(list.get(j).getSumTopTwoPrice())) / 100))));
+            	obj.setRecive(String.valueOf( (float) ((float) (risk * Integer.valueOf(list.get(j).getSumTopTwoPrice().replace(",", ""))) / 100) ));
+            	obj.setSend(String.valueOf( (float) (( (float) (( 100 - risk) * Integer.valueOf(list.get(j).getSumTopTwoPrice().replace(",", ""))) / 100))));
             	obj.setRisk(String.valueOf(risk +" %"));
             	obj.setSumTopTwoPrice(list.get(j).getSumTopTwoPrice());
             	listRisk.add(obj);
@@ -114,8 +114,8 @@ public class LotterService {
         	LotteryModel obj = new LotteryModel();
         	if(list.get(j).getUnderTwo() != null) {
         		obj.setUnderTwo(list.get(j).getUnderTwo());
-            	obj.setRecive(String.valueOf( (float) ((float) (risk * Integer.valueOf(list.get(j).getSumUnderTwoPrice())) / 100) ));
-            	obj.setSend(String.valueOf( (float) (( (float) (( 100 - risk) * Integer.valueOf(list.get(j).getSumUnderTwoPrice())) / 100))));
+            	obj.setRecive(String.valueOf( (float) ((float) (risk * Integer.valueOf(list.get(j).getSumUnderTwoPrice().replace(",", ""))) / 100) ));
+            	obj.setSend(String.valueOf( (float) (( (float) (( 100 - risk) * Integer.valueOf(list.get(j).getSumUnderTwoPrice().replace(",", ""))) / 100))));
             	obj.setRisk(String.valueOf(risk +" %"));
             	obj.setSumUnderTwoPrice(list.get(j).getSumUnderTwoPrice());
             	listRisk.add(obj);

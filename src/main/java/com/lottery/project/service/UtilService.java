@@ -510,16 +510,63 @@ public class UtilService {
 		        
 		        List<LotteryModel> LotteryModelList = new ArrayList<>();
 		        
+		        int sizeListTopThree = listTopThree.size();
+		        int sizeListTod = listTod.size();
+		        int sizeLlistTopTwo = listTopTwo.size();
+		        int sizeListUnderTwo = listUnderTwo.size();
 		        
+		        int maxSizeThree = Math.max(sizeListTopThree,sizeListTod);
+		        int maxSizeTwo = Math.max(sizeLlistTopTwo,sizeListUnderTwo);
+		        int maxSize = Math.max(maxSizeThree,maxSizeTwo);
+		        
+		        int sumTopThree = 0;
+		        int sumTod = 0;
+		        int sumTopTwo = 0;
+		        int sumUnderTwo = 0;
+		        
+		        
+		        for(int i = 0 ; i < maxSize ; i++) {
+		        	LotteryModel lotteryModel = new LotteryModel();
+				      
+		            if(i< listTopThree.size()) {
+		            	lotteryModel.setTopThree(listTopThree.get(i).getTopThree());
+		            	lotteryModel.setTopThreePrice(listTopThree.get(i).getSumTopThreePrice());
+		            	sumTopThree+= Integer.valueOf(lotteryModel.getTopThreePrice().replace(",", ""));
+		            }
+		            
+		            if(i< listTod.size()) {
+		            	lotteryModel.setTod(listTod.get(i).getTod());
+		            	lotteryModel.setTodBack(listTod.get(i).getTodBack());
+		            	lotteryModel.setTodPrice(listTod.get(i).getSumTodPrice());
+		            	sumTod+= Integer.valueOf(lotteryModel.getTodPrice().replace(",", ""));
+		            }
+		            
+		            if(i< listTopTwo.size()) {
+		            	lotteryModel.setTopTwo(listTopTwo.get(i).getTopTwo());
+		            	lotteryModel.setTopTwoPrice(listTopTwo.get(i).getSumTopTwoPrice());
+		            	sumTopTwo+= Integer.valueOf(lotteryModel.getTopTwoPrice().replace(",", ""));
+		            }
+		            
+		            if(i< listUnderTwo.size()) {
+		            	lotteryModel.setUnderTwo(listUnderTwo.get(i).getUnderTwo());
+		            	lotteryModel.setUnderTwoPrice(listUnderTwo.get(i).getSumUnderTwoPrice());
+		            	sumTopTwo+= Integer.valueOf(lotteryModel.getUnderTwoPrice().replace(",", ""));
+		            }
+		            
+		        	
+		        	LotteryModelList.add(lotteryModel);     
+		        }
 		        
 		        LotteryModel lotteryModel = new LotteryModel();
-		        
-		        
-		        LotteryModelList.add(lotteryModel);     
-		        data.put("lotteryModelList", listTopThree);
+		        lotteryModel.setSumTopThreePrice(String.valueOf(sumTopThree));
+		        lotteryModel.setSumTodPrice(String.valueOf(sumTod));
+		        lotteryModel.setSumTopTwoPrice(String.valueOf(sumTopTwo));
+		        lotteryModel.setSumUnderTwoPrice(String.valueOf(sumUnderTwo));
+		        data.put("modelSum", lotteryModel);
+
+		        data.put("lotteryModelList", LotteryModelList);
 			}
 			
-		    // this.exportExcell(workbook,sheet,startDateEndDate,headerStr,listTopThree,listTod,listTopTwo,listUnderTwo);
 		}
 
 			return data;
