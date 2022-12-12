@@ -2,6 +2,7 @@ package com.lottery.project.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.BaseFont;
 
 
 @Service
@@ -22,7 +24,7 @@ public class ExportPdfServiceImpl implements ExportPdfService {
     @Autowired
     private TemplateEngine templateEngine;
 
-    public ByteArrayInputStream exportReceiptPdf(String templateName, Map<String, Object> data) {
+    public ByteArrayInputStream exportReceiptPdf(String templateName, Map<String, Object> data) throws IOException {
         Context context = new Context();
         context.setVariables(data);
         String htmlContent = templateEngine.process(templateName, context);
@@ -31,6 +33,7 @@ public class ExportPdfServiceImpl implements ExportPdfService {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ITextRenderer renderer = new ITextRenderer();
+            renderer.getFontResolver().addFont("c:/windows/fonts/tahoma.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             renderer.setDocumentFromString(htmlContent);
             renderer.layout();
             renderer.createPDF(byteArrayOutputStream, false);

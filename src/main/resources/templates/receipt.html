@@ -2,7 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8"/>
-    <style>
+    <style type='text/css'>
+        * {
+		   font-family: Tahoma;
+		}
+    
         h1 {
             color: #25a7e7;
             text-align: center;
@@ -33,7 +37,7 @@
                         <td  th:text="${user.name}"></td>
                     </tr>
                     <tr>
-                        <td th:text="'Total รวมทั้งหมด : ' + ${modelSum.sumPrice} + '  Bath'"></td>
+                        <td th:text="'Total รวมทั้งหมด  ПРЕДСТАВЛЕНИЕ : ' + ${modelSum.sumPrice} + '  Bath'"></td>
                     </tr>
                     <tr>
                         <td th:text="'Date : ' + ${user.startDate}"></td>
@@ -75,16 +79,16 @@
         <td th:text="${item.underTwoPrice}"></td>
     </tr>
   <tr>
-        <td class="total" colspan="1"><b>Total</b></td>
+        <td class="total" colspan="1"><b>รวม</b></td>
         <td><b th:text="${modelSum.sumTopThreePrice}"></b></td>
         <td bgcolor="black"></td>
-        <td class="total" colspan="2"><b>Total</b></td>
+        <td class="total" colspan="2"><b>รวม</b></td>
         <td><b th:text="${modelSum.sumTodPrice}"></b></td>
         <td bgcolor="black"></td>
-         <td class="total" colspan="1"><b>Total</b></td>
+         <td class="total" colspan="1"><b>รวม</b></td>
         <td><b th:text="${modelSum.sumTopTwoPrice}"></b></td>
         <td bgcolor="black"></td>
-         <td class="total" colspan="1"><b>Total</b></td>
+         <td class="total" colspan="1"><b>รวม</b></td>
         <td><b th:text="${modelSum.sumUnderTwoPrice}"></b></td>
     </tr>
 </table>
