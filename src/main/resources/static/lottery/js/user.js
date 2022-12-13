@@ -1,7 +1,16 @@
 $(document).ready(function(){
+
 	var userId = $('#userId').val();
 	console.log(userId);
     document.getElementById("pdf").href="downloadReceipt/"+userId; 
+    
+    if(userId === null){
+	   $('#pdf').css('display','none');
+     } else {
+	   $('#pdfText').css('display','none');
+	}
+    
+    
 });
 
 function downloadPdf (){
