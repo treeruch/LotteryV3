@@ -33,7 +33,7 @@ public class ExportPdfServiceImpl implements ExportPdfService {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ITextRenderer renderer = new ITextRenderer();
-            renderer.getFontResolver().addFont("c:/windows/fonts/tahoma.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            renderer.getFontResolver().addFont("fonts/tahoma.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             renderer.setDocumentFromString(htmlContent);
             renderer.layout();
             renderer.createPDF(byteArrayOutputStream, false);
