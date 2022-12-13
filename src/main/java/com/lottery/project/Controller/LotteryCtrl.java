@@ -604,9 +604,9 @@ public class LotteryCtrl {
 	    public void downloadReceipt(HttpServletResponse response,@PathVariable(name = "id", required = false) Long id) throws IOException {
 	        Map<String, Object> data = createTestData(id);
 	        ByteArrayInputStream exportedData = exportPdfService.exportReceiptPdf("receipt", data);
-	      
+	        
 	        response.setContentType("application/octet-stream");
-	        response.setHeader("Content-Disposition", "attachment; filename=receipt.pdf");
+	        response.setHeader("Content-Disposition", "attachment; filename=Lottery.pdf");
 	        IOUtils.copy(exportedData, response.getOutputStream());
 	    }
 
